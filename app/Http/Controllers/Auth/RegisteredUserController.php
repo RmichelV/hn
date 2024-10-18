@@ -25,7 +25,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $nationalities = Nationality::orderBy('name', 'asc')->get(); 
+        return view('auth.register', compact('nationalities'));
     }
 
     /**
@@ -36,6 +37,8 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         
+        // dd($request->all());
+
         $validator = Validator::make($request->all(),[
             'name'=>[
                 'string', 
@@ -45,8 +48,10 @@ class RegisteredUserController extends Controller
                 'string', 
                 'max:255', 
                 'regex:/^([A-ZÁÉÍÓÚÑÇĆ][a-záéíóúñçć]+)(\s[A-ZÁÉÍÓÚÑÇĆ][a-záéíóúñçć]+)*$/'],
-            'identification_number'=>[
-                'regex:/^[0-9]{4,10}$/'],
+            'identification_number' => [
+                'required',
+                'integer',
+                'digits_between:4,10',],
             'nationality_id' => [
                 'required',
                 'exists:nationalities,id'],
@@ -66,38 +71,57 @@ class RegisteredUserController extends Controller
             'phone'=>[
                 'nullable',
                 'regex:/^[0-9]{6,10}$/'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => [
+                'required', 
+                'string', 
+                'lowercase', 
+                'email', 
+                'max:255', 
+                'unique:'.User::class,
+                'regex:/^[\w\.-]+@[\w\.-]+\.(com|net|edu)$/'],
+            'password' => [
+                'required', 
+                'confirmed', 
+                Rules\Password::defaults(),
+                'min:8',
+                'regex:/^.*(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*()_+\-=\[\]{};:\'"\\|,.<>\/?]).*$/'],
         ],[
-            'name.regex' => 'El nombre debe comenzar con una letra mayúscula y estar seguido de letras minúsculas.',
-            'last_name.regex' => 'El apellido debe comenzar con una letra mayúscula y estar seguido de letras minúsculas.',
-            'identification_number.regex' => 'El número de identidad debe contener entre 4 y 10 dígitos.',
+            'name.regex' => 'Cada nombre debe comenzar con una letra mayúscula y estar seguido de letras minúsculas.',
+            'last_name.regex' => 'Cada apellido debe comenzar con una letra mayúscula y estar seguido de letras minúsculas.',
+            'identification_number.integer' => 'El número de identidad debe ser un numero entero',
+            'identification_number.digits_between' => 'El número de identidad debe contener entre 4 y 10 dígitos.',
             'nationality_id.exists' => 'La nacionalidad seleccionada no es válida.',
             'birthday.date' => 'La fecha de nacimiento debe ser una fecha válida.',
             'phone.regex' => 'El teléfono debe contener entre 6 y 10 dígitos.',
             'email.email' => 'El correo electrónico debe ser una dirección válida.',
             'email.max' => 'El correo electrónico no debe superar los 255 caracteres.',
             'email.unique' => 'El correo electrónico ya está en uso.',
+            'email.regex' => 'El email debe terminar en .com, .net o .edu',
             'password.required' => 'La contraseña es obligatoria.',
             'password.confirmed' => 'Las contraseñas no coinciden.',
-            'password' => 'La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
+            'password.min'=>'La contraseña debe ser como minimo 8 caracteres',
+            'password.regex' => 'La contraseña debe tener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.',
         ]);
-        // $request->validate([
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'last_name'=>$request->last_name,
-            'identification_number'=>$request->identification_number,
-            'nationality_id'=>$request->nationality_id,
-            'rol_id'=> 3,
-            'phone'=>$request->phone,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput(); 
+        }
+
+        $user = new User();
+
+        $user->name = $request->input('name');
+        $user->last_name = $request->input('last_name');
+        $user->identification_number = $request->input('identification_number');
+        $user->nationality_id = $request->input('nationality_id');
+        $user->birthday = $request->input('birthday');
+        $user->rol_id = 3;
+        $user->phone = $request->input('phone');
+        $user->email = $request->input('email');
+        $user->password = Hash::make( $request->input('password'));
+
+        $user->save();
 
         event(new Registered($user));
 

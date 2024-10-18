@@ -3,12 +3,54 @@
         @csrf
 
         <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
+        <div class="mt-4">
+            <x-input-label for="name" :value="__('Nombre(s)')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!--Last Name -->
+        <div class="mt-4">
+            <x-input-label for="last_name" :value="__('Apellido(s)')" />
+            <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="last_name" />
+            <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+        </div>
+
+        <!--Identification Number -->
+        <div class="mt-4">
+            <x-input-label for="identification_number" :value="__('Numero de Identificación (CI/PASAPORTE)')" />
+            {{-- <x-text-input id="identification_number" class="block mt-1 w-full" type="number" name="identification_number" :value="old('identification_number')" required autofocus autocomplete="identification_number" />   
+                      --}}
+            <x-text-input id="identification_number" class="block mt-1 w-full" type="number" name="identification_number" :value="old('identification_number')" required autofocus autocomplete="identification_number" />
+            <x-input-error :messages="$errors->get('identification_number')" class="mt-2" />
+        </div>
+
+        <!--Nationalities-->
+        <div class="mt-4">
+            <x-input-label for="nationality_id" :value="__('Nacionalidad')" />
+            <select id="nationality_id" name="nationality_id" class="block mt-1 w-full" required>
+                <option value="">Selecciona tu nacionalidad</option>
+                @foreach($nationalities as $nationality)
+                    <option value="{{ $nationality->id }}">{{ $nationality->name }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('nationality_id')" class="mt-2" />
+        </div>
+
+        <!--Birthday-->
+        <div class="mt-4">
+            <x-input-label for="birthday" :value="__('Fecha de Nacimiento')" />
+            <input id="birthday" class="block mt-1 w-full" type="date" name="birthday" :value="old('birthday')" required />            
+            <x-input-error :messages="$errors->get('birthday')" class="mt-2" />
+        </div>
+
+        <!--Phone-->
+        <div class="mt-4">
+            <x-input-label for="phone" :value="__('Número de contacto')" />
+            <x-text-input id="phone" class="block mt-1 w-full" type="number" name="phone" :value="old('phone')" required autofocus autocomplete="phone" />            
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+        </div>
+        
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
