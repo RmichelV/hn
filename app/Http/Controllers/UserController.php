@@ -25,8 +25,8 @@ class UserController extends Controller
         $users = User::all();
         $rols = Rol::all();
         $nationalities = Nationality::all();
-
-        return view('Users.index', compact('users','rols','nationalities'));
+        
+        return view('User.index', compact('users','rols','nationalities'));
     }
 
     /**
