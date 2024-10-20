@@ -31,7 +31,7 @@
             <select id="nationality_id" name="nationality_id" class="block mt-1 w-full" required>
                 <option value="">Selecciona tu nacionalidad</option>
                 @foreach($nationalities as $nationality)
-                    <option value="{{ $nationality->id }}">{{ $nationality->name }}</option>
+                    <option value="{{$nationality->id}}">{{ $nationality->name }}</option>
                 @endforeach
             </select>
             <x-input-error :messages="$errors->get('nationality_id')" class="mt-2" />

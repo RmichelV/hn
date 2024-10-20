@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\Nationality;
@@ -27,8 +32,8 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::resource('nationalities',Nationality::class);
-Route::resource('rols',Rol::class);
-Route::resource('users',User::class);
-Route::resource('shifts',Shift::class);
-Route::resource('employees',Employee::class);
+Route::resource('nationalities',NationalityController::class);
+Route::resource('rols',RolController::class);
+Route::resource('users',UserController::class);
+Route::resource('shifts',ShiftController::class);
+Route::resource('employees',EmployeeController::class);
