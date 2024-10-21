@@ -16,6 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        DB::table('shifts')->insert([
+            ['name' => 'Diurno y Vespertino'],
+            ['name' => 'Vespertino y Nocturno'],
+            ['name' => 'Nocturno y Madrugada'],
+            ['name' => 'Madrugada y Diurno'],
+        ]);
     }
 
     /**

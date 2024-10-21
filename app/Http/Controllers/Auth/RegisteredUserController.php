@@ -116,7 +116,7 @@ class RegisteredUserController extends Controller
         $user->identification_number = $request->input('identification_number');
         $user->nationality_id = $request->input('nationality_id');
         $user->birthday = $request->input('birthday');
-        $user->rol_id = 3;
+        $user->rol_id = 2;
         $user->phone = $request->input('phone');
         $user->email = $request->input('email');
         $user->password = Hash::make( $request->input('password'));

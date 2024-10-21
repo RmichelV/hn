@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->date('hire_date');
+            $table->unsignedBigInteger('shift_id');
             $table->decimal('salary');
             $table->timestamps();
 
             //Claves foraneas
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('shift_id')->references('id')->on('shifts')->onDelete('cascade');
         });
     }
 

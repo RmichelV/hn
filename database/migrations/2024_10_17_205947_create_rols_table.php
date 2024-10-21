@@ -16,6 +16,18 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
+        DB::table('rols')->insert([
+            ['name' => 'Administrador'],
+            ['name' => 'Cliente'],
+            ['name' => 'Cocinero'],
+            ['name' => 'Contador'],
+            ['name' => 'Gerente'],
+            ['name' => 'Limpieza'],
+            ['name' => 'Mantenimiento'],
+            ['name' => 'Recepcionista'],
+            ['name' => 'Seguridad'],
+            ['name' => 'Supervisor'],
+        ]);
     }
 
     /**
