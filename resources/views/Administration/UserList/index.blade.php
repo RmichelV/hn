@@ -1,3 +1,6 @@
+@auth
+    
+
 @extends('welcome')
 
 @section('content')
@@ -56,3 +59,5 @@
     
 
 @endsection
+
+@endauth
