@@ -22,6 +22,13 @@ class RoomTypeController extends Controller
         return view('Administration.RoomTypesList.index', compact('room_types'));
     }
 
+    public function welcome()
+    {
+        $room_types = Room_type::all();
+
+        return view('welcome', compact('room_types'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -1,28 +1,34 @@
+<style>
+    .nav_second{
+    background-color:  #2b99b5;
+    }
+</style>
+
 @php
     $user = Auth::User();
 @endphp
 
 @if ($user->rol_id==1)
-    <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+    <nav x-data="{ open: false }" class="nav_second">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')" class="text-links">
                             {{ __('Lista de Usuarios') }}
                         </x-nav-link>
                     </div>
 
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')">
+                        <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')" class="text-links" >
                             {{ __('Lista de Empleados') }}
                         </x-nav-link>
                     </div>
 
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        <x-nav-link :href="route('reservationList')" :active="request()->routeIs('reservationList')" class="text-links">
                             {{ __('Lista de Reservas') }}
                         </x-nav-link>
                     </div>

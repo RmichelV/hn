@@ -19,7 +19,7 @@
     @endif
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregar">
-        Agregar un nuevo tipo de habitación
+        Agregar una nueva habitación
     </button>
 
     <div
@@ -31,22 +31,18 @@
             <thead>
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio Unitario</th>
-                    <th scope="col">Imagen</th>
+                    <th scope="col">Tipo de habitación</th>
+                    <th scope="col">Número de habitación</th>
                     <th scope="col">Acciones</th>
+
                 </tr>
             </thead>
             <tbody>
-                @foreach ($room_types as $room_type)
+                @foreach ($rooms as $room)
                     <tr class="">
-                        <td scope="row">{{$room_type->id}}</td>
-                        <td>{{$room_type->name}}</td>
-                        <td>{{$room_type->quantity}}</td>
-                        <td>{{$room_type->price}}</td>
-                        <td> <img src="{{ asset('storage/' . $room_type->room_image) }}" alt="" srcset="" class="room_type_img"> </td>
-
+                        <td scope="row">{{$room->id}}</td>
+                        <td>{{$room->room_type->name}}</td>
+                        <td>{{$room->room_number}}</td>
                         <td>
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editar{{$room_type->id}}">
                                 Editar

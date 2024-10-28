@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Password;
 
+use App\Models\Room_type;
+
 class UserController extends Controller
 {
     /**
@@ -26,8 +28,9 @@ class UserController extends Controller
         $users = User::all();
         $rols = Rol::all();
         $nationalities = Nationality::all();
+        $room_types = Room_type::all();
         
-        return view('Administration.UserList.index', compact('users','rols','nationalities'));
+        return view('Administration.UserList.index', compact('users','rols','nationalities','room_types'));
     }
 
     /**

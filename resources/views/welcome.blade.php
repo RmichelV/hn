@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Hostal Nomada</title>
-
+        <link rel="stylesheet" href="../css/styles.css">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -27,8 +27,20 @@
             crossorigin="anonymous"
         />
 
+         <!-- Styles / Scripts -->
+        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+            @vite(['resources/css/app.css', 'resources/css/styles.css', 'resources/js/app.js'])
+        @else
+            <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        @endif
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+
     </head>
-    <body class="font-sans antialiased dark:bg-black dark:text-white/50">
+
+    <body class="font-sans antialiased dark:bg-dark dark:text-white/50">
         
         @include('layouts.navigation')
         @php
@@ -39,8 +51,28 @@
             @include('layouts.navigationAdm')
         @endauth
 
-
+        <div class="image-container">
+            <img src="{{asset('img/LaPaz.png')}}" alt="" class="banner-img">
+            <div class="overlay">
+                <h1>HOSTAL NOMADA SUITS</h1>
+                <h2>El mejor hostal ubicado en la ciudad maravilla de La Paz - Bolivia</h2>
+            </div>
+        </div>
+        
         @yield('content')
+
+        <div class="container">
+            <h1 class="text-center my-4">Tipos de Habitaciones</h1>
+            <div class="row">
+                @foreach($room_types as $room_type)
+                <div class="room-type">
+                    <img src="{{ asset('storage/' . $room_type->room_image) }}" alt="" srcset="" class="room_type_img"> </td>
+                    <h2>{{ $room_type->name }}</h2>
+                    <p>{{ $room_type->price }}</p>
+                </div>
+            @endforeach
+            </div>
+        </div>
 
         <!-- Bootstrap JavaScript Libraries -->
         <script

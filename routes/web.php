@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
@@ -15,6 +16,7 @@ use App\Models\Rol;
 use App\Models\User;
 use App\Models\Shift;
 use App\Models\Employee;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 Route::get('/', function () {
@@ -33,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('reservations',ReservationController::class);
 });
 
 require __DIR__.'/auth.php';
@@ -46,3 +49,9 @@ Route::resource('employees',EmployeeController::class);
 
 Route::resource('room_types',RoomTypeController::class);
 Route::resource('rooms',RoomController::class);
+Route::resource('reservations', ReservationController::class);
+
+
+
+Route::get('/', [RoomTypeController::class, 'welcome'])->name('dashboard');
+Route::get('/Administration/ReservationList.index', [ReservationController::class, 'reservationList'])->name('reservationList');

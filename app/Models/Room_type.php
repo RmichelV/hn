@@ -18,10 +18,14 @@ class Room_type extends Model
         'price',
         'room_image',
     ];
-    public $timestamp = false;
+    public $timestamps = false;
 
     public function room(){
         return $this->hasMany( Room::class, 'room_type_id', 'id');
+    }
+
+    public function reservation(){
+        return $this->hasMany( Reservation::class, 'room_type_id', 'id');
     }
 
 }

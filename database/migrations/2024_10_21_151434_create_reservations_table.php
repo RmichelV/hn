@@ -14,13 +14,16 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('room_id');
-            $table->date('check-in');
-            $table->date('check-out');
+            $table->unsignedBigInteger('room_type_id');
+            $table->integer('number_of_rooms');
+            $table->integer('number_of_people');
+            $table->date('check_in');
+            $table->date('check_out');
+            $table->decimal('total_price');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+            $table->foreign('room_type_id')->references('id')->on('room_types')->onDelete('cascade');
         });
     }
 
